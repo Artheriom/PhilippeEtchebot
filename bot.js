@@ -1,6 +1,6 @@
 var Discord = require('discord.io');
 var auth = require('./auth.json');
-
+const random = require('random')
 
 // Initialize Discord Bot
 var bot = new Discord.Client({
@@ -32,8 +32,7 @@ bot.on('message', function (user, userID, channelID, message, evt) {
                 bot.sendMessage({to: channelID, message: "PHILIPPE POUTOU, BREH BREH ! \n https://www.youtube.com/watch?v=bIft0PeKoJw"});
                 break;
             case ' random':
-                rand = Math.floor(Math.random() * Math.floor(33));
-                bot.sendMessage({ to: channelID, message: ":wave: Voici votre Random Philippe : \n " + url + rand + ".gif"});
+                bot.sendMessage({ to: channelID, message: ":wave: Voici votre Random Philippe : \n " + url + random.int(1, 32) + ".gif"});
                 break;
 
             case ' about':
