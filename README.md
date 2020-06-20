@@ -17,8 +17,8 @@ Car on adore tous Philippe Etchebest, et que ses GIF arrivent toujours à se cas
 3. Démarrer.
 
 ## Commandes :
-* `!philippe` : Affiche le Philippe of the Day
-* `!philippe random` : Philippe au hasard
+* `!philippe` : Affiche un Philippe au hasard
+* `!philippe du jour` : Philippe du jour
 * `!philippe poutou` : PHILIPPE POUTOU, PHILIPPE, PHILIPPE !
 
 ## Contribuer :

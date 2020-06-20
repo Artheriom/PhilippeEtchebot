@@ -8,38 +8,49 @@ var bot = new Discord.Client({
     autorun: true
 });
 
-
+const talkedRecently = new Set();
+const url = "https://raw.githubusercontent.com/Artheriom/PhilippeEtchebot/master/images/";
 
 bot.on('message', function (user, userID, channelID, message, evt) {
     if (message.toLowerCase().startsWith("!philippe")) {
-        var args = message.substring(9);
-        var cmd = args;
-        var url = "https://raw.githubusercontent.com/Artheriom/PhilippeEtchebot/master/images/";
+	bot.deleteMessage({messageID: evt.d.id, channelID:channelID});
+		
+		if (talkedRecently.has(userID)) {
+			bot.sendMessage({ to: userID, message: "ARRÊTE DE SPAMMER LES PHILIPPES PUTAIN DE BORDEL DE MERDE\n " + url + 11 + ".gif"});
+		} else {
 
-        rand = new Date();
-        rand = rand.getMonth() + rand.getDay() + rand.getFullYear();
-		rand = rand % 33;
+				var args = message.substring(9);
+				var cmd = args;
 
-        switch(cmd) {
-            case '':
-                bot.sendMessage({ to: channelID, message: ":wave: Voici votre Philippe of the Day (POTD) : \n " + url + rand + ".gif"});
-                break;
+				rand = new Date();
+				rand = rand.getMonth() + rand.getDay() + rand.getFullYear();
+				rand = (rand % 35) + 1;
 
-            case ' aide':
-                bot.sendMessage({ to: channelID, message: "`!philippe` : Envoi le Philippe of the Day (POTD) \n`!philippe random` : Envoi un Random Philippe \n `!philippe poutou` : BREH BREH \n `!philippe about` : A propose."});
-                break;
-            case ' poutou':
-                bot.sendMessage({to: channelID, message: "PHILIPPE POUTOU, BREH BREH ! \n https://www.youtube.com/watch?v=bIft0PeKoJw"});
-                break;
-            case ' random':
-                bot.sendMessage({ to: channelID, message: ":wave: Voici votre Random Philippe : \n " + url + random.int(1, 32) + ".gif"});
-                break;
+				switch(cmd) {
+					case '':
+						bot.sendMessage({ to: channelID, message: ":wave: Voici votre Philippe : \n " + url + random.int(1, 35) + ".gif"});
+						break;
+					case ' aide':
+						bot.sendMessage({ to: channelID, message: "`!philippe` : Envoi un Philippe au hasard \n`!philippe du jour` : Envoi le Philippe du jour \n `!philippe about` : A propos."});
+						break;
+					case ' du jour':
+						bot.sendMessage({ to: channelID, message: ":wave: Voici votre Philippe du jour : \n " + url + rand + ".gif"});
+						break;
+					case ' about':
+						bot.sendMessage({ to: channelID, message: "Philippe Etchebot - v1.2.0 by @Artheriom\nSources sur https://github.com/Artheriom/PhilippeEtchebot"});
+						break;
+					default:
+						bot.sendMessage({ to: channelID, message: 'Commande inconnue. Tapez `!philippe aide` pour avoir la liste des commandes.' });
+				}
 
-            case ' about':
-                bot.sendMessage({ to: channelID, message: "Philippe Etchebot - v1.1.0 by @Artheriom\nSources sur https://github.com/Artheriom/PhilippeEtchebot"});
-                break;
-            default:
-                bot.sendMessage({ to: channelID, message: 'Commande inconnue. Tapez `!philippe aide` pour avoir la liste des commandes.' });
-        }
+			// Adds the user to the set so that they can't talk for a minute
+			talkedRecently.add(userID);
+			setTimeout(() => {
+			  // Removes the user from the set after a minute
+			  talkedRecently.delete(userID);
+			}, 60000);
+		}
+	
+       
     }
 });
